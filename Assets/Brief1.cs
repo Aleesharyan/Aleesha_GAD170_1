@@ -31,34 +31,59 @@ public class Brief1 : MonoBehaviour
     public void InitialStats()
     {
         //Initialize stats, level xp, reqxp etc.
-        health = 100;
-        defense = 50;
-        speed = 20;
-        attack = 10;
+        health = 100f;
+        defense = 50f;
+        speed = 20f;
+        attack = 10f;
         level = 0;
-        curXp = 0;
-        reqXp = 100;
+        curXp = 0f;
+        reqXp = 100f;
             
     }
 
     public void Interation(int exp)
     {
         //An interation called by a button press
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            speed++;
+        }
     }
 
     public void GainXP(int amount) //GainProgress
     {
         //increase our current xp
+        curXp += amount;
+        Debug.Log("Gained" + amount + "XP");
+        Debug.Log("Total current XP is now: " + curXp);
+        CheckProgress(curXp);
+    }
+
+    public void CheckProgress(float amount)
+    {
+        if (amount >= reqXp)
+        {
+            LevelUp();
+            Debug.Log("Player has leveled up");
+        }
     }
 
     public void LevelUp() //CompleteLap
     {
-        //increase our level
+        level++;
+        curXp = 0f;
+        reqXp *= 100;
     }
 
     public void IncreaseStats()
     {
-        //improve our stats
+        if (curXp >= reqXp)
+        {
+            health += 5f;
+            defense += 5f;
+            speed += 5f;
+            attack += 5f;
+        }
     }
 
 }
